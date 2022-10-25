@@ -24,6 +24,6 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
     - name: Build user-service Image
-      run: docker build . --file Dockerfile --tag yorgoc/mk/userservice:v1
+      run: docker build . --file Dockerfile --tag yorgoc/userservice:v1
     - name: Push user-service Image
-      run: docker push yorgoc/mk/userservice:v1
+      run: docker push yorgoc/userservice:v1
