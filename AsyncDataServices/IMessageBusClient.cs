@@ -1,7 +1,9 @@
+using user_service.DTOs;
+
 namespace user_service.AsyncDataServices
 {
-    public class IMessageBusClient
+    public interface IMessageBusClient
     {
-        
+        void PublishNewUser( PublishedUser publishedUser);
     }
 }
