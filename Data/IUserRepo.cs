@@ -10,7 +10,7 @@ namespace user_service.Data
         IEnumerable<User> getAllUsers();
         User GetUserById(int id);
         void CreateUser(User user);
+        public User GetUserByAuth0Id(string auth0Id);
 
-        User GetUserByAuth0Id(string auth0Id);
     }
 }
