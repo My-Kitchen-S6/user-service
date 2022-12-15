@@ -42,18 +42,18 @@ namespace user_service
             });
             services.AddSingleton<IMessageBusClient, MessageBusClient>();
             
-            // if (_env.IsProduction())
-            // {
-            //     Console.WriteLine("--> Using MySQL server Db");
-            //     services.AddDbContext<AppDbContext>(opt =>
-            //         opt.UseMySQL(Configuration.GetConnectionString("UserServiceDB")));
-            // }
-            // else
-            // {
+            if (_env.IsProduction())
+            {
+                Console.WriteLine("--> Using MySQL server Db");
+                services.AddDbContext<AppDbContext>(opt =>
+                    opt.UseMySQL(Configuration.GetConnectionString("UserServiceDB")));
+            }
+            else
+            {
                 Console.WriteLine("--> Using InMemory Db");
                 services.AddDbContext<AppDbContext>(opt =>
                     opt.UseInMemoryDatabase("InMemory"));
-          //  }
+            }
 
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -83,7 +83,7 @@ namespace user_service
                 endpoints.MapControllers();
             });
             
-         //   PrepDb.PrepPopulation(app, env.IsProduction());
+            PrepDb.PrepPopulation(app, env.IsProduction());
         }
     }
 }
