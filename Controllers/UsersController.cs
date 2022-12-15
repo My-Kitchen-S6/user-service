@@ -10,9 +10,9 @@ using user_service.Models;
 
 namespace user_service.Controllers
 {
+    [ApiController]
     public class UsersController : ControllerBase
     {
-        
         private readonly IUserRepo _repository;
         private readonly IMapper _mapper;
         private readonly IMessageBusClient _messageBusClient;
@@ -62,6 +62,7 @@ namespace user_service.Controllers
             
         }
         
+        [HttpPost("[controller]/create", Name = "CreateUser")]
         public async Task<ActionResult<ReadUser>> CreateUser(CreateUser createUser)
         {
             var userModel = _mapper.Map<User>(createUser);

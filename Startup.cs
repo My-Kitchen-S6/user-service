@@ -31,7 +31,8 @@ namespace user_service
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {services.AddCors(o =>
+        {
+            services.AddCors(o =>
             {
                 o.AddPolicy("CorsPolicy", builder =>
                     builder.AllowAnyOrigin()
@@ -41,18 +42,18 @@ namespace user_service
             });
             services.AddSingleton<IMessageBusClient, MessageBusClient>();
             
-            if (_env.IsProduction())
-            {
-                Console.WriteLine("--> Using MySQL server Db");
-                services.AddDbContext<AppDbContext>(opt =>
-                    opt.UseMySQL(Configuration.GetConnectionString("UserServiceDB")));
-            }
-            else
-            {
+            // if (_env.IsProduction())
+            // {
+            //     Console.WriteLine("--> Using MySQL server Db");
+            //     services.AddDbContext<AppDbContext>(opt =>
+            //         opt.UseMySQL(Configuration.GetConnectionString("UserServiceDB")));
+            // }
+            // else
+            // {
                 Console.WriteLine("--> Using InMemory Db");
                 services.AddDbContext<AppDbContext>(opt =>
                     opt.UseInMemoryDatabase("InMemory"));
-            }
+          //  }
 
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -73,15 +74,16 @@ namespace user_service
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "user_service v1"));
             }
 
-            app.UseHttpsRedirection();
-            app.UseCors("CorsPolicy");
             app.UseRouting();
-
+            app.UseCors("CorsPolicy");
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
             
-            PrepDb.PrepPopulation(app, env.IsProduction());
+         //   PrepDb.PrepPopulation(app, env.IsProduction());
         }
     }
 }

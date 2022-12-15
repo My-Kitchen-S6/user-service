@@ -36,7 +36,11 @@ namespace user_service.Data
             if (!context.Users.Any())
             {
                 Console.WriteLine("--> seeding data");
-
+                context.Users.AddRange(
+                    new User() {Auth0Id = "blahblah1", UserName="Tester1"},
+                    new User() {Auth0Id = "blahblah2", UserName = "Tester2"},
+                    new User() {Auth0Id = "blahblah3", UserName = "Tester3"}
+                );
                 context.SaveChanges();
             }
             else
