@@ -71,16 +71,16 @@ namespace user_service.Controllers
 
             var userReadDto = _mapper.Map<ReadUser>(userModel);
             
-            // try
-            // {
-            //     var publishedUserDto = _mapper.Map<PublishedUser>(userReadDto);
-            //     publishedUserDto.Event = "User_Published";
-            //     _messageBusClient.PublishNewUser(publishedUserDto);
-            // }
-            // catch(Exception e)
-            // {
-            //     Console.WriteLine($"--> Could not send Asynchronously: {e.Message}");
-            // }
+            try
+            {
+                var publishedUserDto = _mapper.Map<PublishedUser>(userReadDto);
+                publishedUserDto.Event = "User_Published";
+                _messageBusClient.PublishNewUser(publishedUserDto);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"--> Could not send Asynchronously: {e.Message}");
+            }
 
             return CreatedAtRoute(nameof(GetUserById), new { Id = userReadDto.Id }, userReadDto);
         }

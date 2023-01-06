@@ -83,7 +83,7 @@ namespace user_service
                 endpoints.MapControllers();
             });
             
-            PrepDb.PrepPopulation(app, env.IsProduction());
+            PrepDb.PrepPopulation(app, true);
         }
     }
 }
